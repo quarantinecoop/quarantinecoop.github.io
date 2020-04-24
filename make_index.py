@@ -56,9 +56,9 @@ with open('index_test.html', 'w+') as outfile:
 	with open("masonry_start.txt") as f:
 	    lines = f.readlines()
 	    outfile.writelines(lines)
-	for j in range(10):
-		write_article(month="april", day="7", title="test", abstract="big test energy",
-						textfile="garbage", outfile=outfile)
+	# for j in range(10):
+	# 	write_article(month="april", day="7", title="test", abstract="big test energy",
+	# 					textfile="garbage", outfile=outfile)
 
 	with open("masonry_end.txt") as f:
 	    lines = f.readlines()

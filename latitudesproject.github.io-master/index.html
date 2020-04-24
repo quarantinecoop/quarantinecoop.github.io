@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LATITUDES</title>
+	<link rel="icon" href="favicon.ico">
+	    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+</head>
+
+
+<style>
+
+@font-face { font-family: FranklinGothicHeavy; 
+  src: url('fonts/Franklin Gothic Heavy.ttf'); 
+} 
+
+@font-face { font-family: FranklinGothicBook; 
+  src: url('fonts/Franklin Gothic Book.ttf'); 
+} 
+
+@font-face { font-family: CourierNew; 
+  src: url('fonts/Courier New.ttf'); 
+} 
+
+body {
+  margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    font-family: FranklinGothicBook;
+    color: black;
+    display: inline;
+    margin-left: 50px;
+    font-size: 2em;
+}
+
+a:link {
+  color:black;
+}
+a:visited {
+  color:black;
+}
+a:hover {
+  color: #ccc;
+}
+
+.home {
+  color: black;
+  font-family: FranklinGothicHeavy;
+  font-size: 4em;
+  margin-top: 0.5em;
+  margin-bottom:0.2em;
+  margin-left: 0;
+}
+
+.menu {
+  text-decoration: none;
+}
+a.menu:link {
+  color:black;
+}
+a.menu:visited {
+  color:black;
+}
+a.menu:hover {
+  color: #ccc;
+}
+
+.header_p, .about, .contact {
+  font-family: CourierNew;
+}
+
+.header {
+  margin-bottom: 50px;
+}
+
+.menu {
+  display: inline;
+}
+.accordion {
+	background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-family: FranklinGothicHeavy;
+    font-size: 50px;
+    transition: 0.4s;
+}
+
+.active, .accordion:hover {
+    color: #ccc; 
+}
+
+.panel {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+    font-family: CourierNew;
+    
+}
+
+
+.panel_first {
+    padding: 0 18px;
+    display: block;
+    background-color: white;
+    overflow: hidden;
+    font-family: CourierNew;
+    vertical-align: middle;
+}
+
+.panel_body {
+  display: inline-block;
+  vertical-align: middle;
+  padding-bottom: 20px;
+}
+
+
+/** FOOTER **/
+footer {
+  padding-top: 50px;
+}
+
+h1.acknowledgements {
+  color: black;
+  font-family: FranklinGothicHeavy;
+  text-align: center;
+  margin-bottom: 5px;
+}
+p.acknowledgements {
+  margin-top: 5px;
+  color: black;
+  font-family: CourierNew;
+  text-align: center;
+}
+
+p.acknowledgements-list {
+  font-family: FranklinGothicBook;
+  text-align: center;
+  font-size: 20px;
+  margin: 5px;
+  color:#bbb;
+}
+a.acknowledgements-list {
+  text-decoration: none;
+}
+a.acknowledgements-list:link {
+  color:#bbb;
+}
+a.acknowledgements-list:visited {
+  color:#bbb;
+}
+a.acknowledgements-list:hover {
+  color: #ccc;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+<ul>
+  <li display="inline" class="home menu"><a href="index.html" class="menu">LATITUDES</a></li>
+  <li display="inline"><a href="subscribe.html" class="menu">Subscribe</a></li>
+  <li display="inline"><a href="about.html" class="menu">About</a></li>
+  <li display="inline"><a href="contact.html" class="menu">Contact</a></li>
+</ul>
+
+  <p class="header_p">
+    1 There are 4228 miles on the TransAmerica trail. <br />
+    2 An audio documentary.
+  </p>
+</div>
+
+<div>
+
+<p class="header_p">
+    Latitudes has launched, and we're on the road! 
+    <a href="subscribe.html">Subscribe to get audio postcards via email or podcast!</a> <!-- You can also now 
+    <a href="https://www.indiegogo.com/project/preview/11c4e64a">help support the project.</a>  -->
+  </p>
+  
+</div>
+<!-- This should be the map I think?
+-->
+<div id="mapid" style="width: 900px; height: 400px;"></div>
+
+<div style="display: none">
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/267170878" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+</div>
+
+
+<script>
+var icon_height = 12.0
+var icon = L.icon({
+    iconUrl: 'favicon.ico',
+
+    iconSize:     [icon_height, icon_height], // size of the icon
+    iconAnchor:   [icon_height / 2, icon_height / 2], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+});
+
+</script>
+
+<script src="wob_map.js"></script>
+
+
+
+<footer>
+<div class="acknowledgements">
+<h1 class="acknowledgements">Acknowledgments</h1>
+<p class="acknowledgements">So many thanks. We couldn't bike this without you.</p>
+
+<p class="acknowledgements-list">
+  <a href="https://www.adventurecycling.org/" class="acknowledgements-list">Adventure Cycling Association</a><br/>
+  <a href="https://hindenburg.com/" class="acknowledgements-list">Hindenburg</a><br/>
+  <a href="https://www.planetbike.com/" class="acknowledgements-list">Planet Bike</a><br/>
+  <a href="http://www.rudyproject.com/" class="acknowledgements-list">Rudy Project</a><br/>
+  <a href="http://www.somervelo.com/" class="acknowledgements-list">Somervelo</a><br/>
+  <a href="http://www.peanutbutter.com/" class="acknowledgements-list">Skippy Peanut Butter</a><br/>
+  <a href="https://tannusamerica.com/" class="acknowledgements-list">Tannus</a><br/>
+  <a href="http://www.hottmanlawoffice.com/" class="acknowledgements-list">The Cyclist Lawyer</a><br/><br/>
+  
+
+  With special thanks to:<br/>
+  Dana Apple &#8226; Nick Hershey &#8226; Jeanille Hiciano <br/>
+   Kenneth Ligda &#8226; Michelle McGhee &#8226; Rosina Miller &#8226; Anne Pope &#8226; questgrade8 <br/>
+  Jackson Roach &#8226; Daniel Sandomire &#8226; Nathan M. Smith &#8226; Nora Tan &#8226; Amy Umaretiya<br/>
+  Kathy Tu &#8226; and our anonymous donors.<br/>
+  
+</p>
+
+
+</footer>
+
+</body>
+
+
+
+
+
+<html>
