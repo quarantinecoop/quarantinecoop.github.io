@@ -3,18 +3,26 @@ import csv
 def writeline(outfile, text):
 	outfile.write(text + '\n')
 
-def write_article(month, day, abstract, textfile, outfile):
+def write_article(month, day, title, abstract, textfile, outfile, year="2020"):
 	writeline(outfile, '<article class="masonry__brick entry format-standard animate-this">')
 	writeline(outfile, '<div class="entry__thumb">')
 	writeline(outfile, '<a href="' + month + '_' + day + '.html" class="entry__thumb-link">')
 	writeline(outfile, '<img src="images/' + month + '_' + day + '_' + '1.jpeg" ')
 	writeline(outfile, '</a>')
 	writeline(outfile, '</div>')
-                        #         <img src="images/thumbs/masonry/woodcraft-600.jpg" 
-                        #                 srcset="images/thumbs/masonry/woodcraft-600.jpg 1x, images/thumbs/masonry/woodcraft-1200.jpg 2x" alt="">
-                        #     </a>
-                        # </div>
-        
+
+	writeline(outfile, '<div class="entry__text">')
+	writeline(outfile, '<div class="entry__header">')
+	writeline(outfile, '<h2 class="entry__title"><a href="' + month + '_' + day + 
+						'.html">' + title + '</a></h2>')
+	writeline(outfile, '<div class="entry__meta">')
+	writeline(outfile, '<span class="entry__meta-date"><a href="' + month + '_' + day + 
+						'.html">' + month + ' ' + day + ', ' + year + '</a></span>')
+	writeline(outfile, '</div>')
+	writeline(outfile, '</div>')
+	writeline(outfile, '<div class="entry__excerpt"><p>')
+	writeline(outfile, abstract)
+	writeline(outfile, '</p></div></div>')        
                         # <div class="entry__text">
                         #     <div class="entry__header">
     
@@ -49,7 +57,8 @@ with open('index_test.html', 'w+') as outfile:
 	    lines = f.readlines()
 	    outfile.writelines(lines)
 	for j in range(10):
-		write_article("april", "7", "test", "big test energy", outfile)
+		write_article(month="april", day="7", title="test", abstract="big test energy",
+						textfile="garbage", outfile=outfile)
 
 	with open("masonry_end.txt") as f:
 	    lines = f.readlines()
